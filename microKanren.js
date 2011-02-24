@@ -17,15 +17,47 @@ var disj = function(f1,f2){
 	    );}
     );};
 
+
 var conj = function(f1,f2){
     return(
 	function(x){
 	    return(
-		applend.apply(map(f2,(f1 x)));
-	    );
-	}
-    );
+		append.apply(this,map(f2,(f1(x))))
+	    );}
+    );};
+
+//logic variables
+//when attempting to implement scheme-like features
+//in js, not hviang real symbols is a fairly large
+//issue...
+
+//prototypical logic variable
+var __logivar__ = {};
+__logivar__.id = "__logivar__";
+
+//creates a logic variable
+var logicVar = function(var_name){
+    var o = Object.create(__logivar__);
+    o.id = var_name;//this will be used to compare 2 logi vars
+    return o;
 };
+
+var isLogicVar = function (x) { return __logivar__.isPrototypeOf(x);}
+
+var emptySubset = [];
+
+//of course were not going to use assoc lists
+//since javascript objects work just fine
+var ext_s = function (vari, value, s){
+    s[vari] = value;
+    return s;
+};
+
+
+
+
+
+
 
 
 //scheme primatives we'll probably need
@@ -80,4 +112,13 @@ var map = function(func,ls) {
 	rls[i] = func(ls[i]);
     }
     return rls;
+};
+
+//usual crockford magic to assure that Object.create exists
+if (typeof Object.create !== 'function') {
+    Object.create = function (o) {
+        function F() {}
+        F.prototype = o;
+        return new F();
+    };
 }
