@@ -8,3 +8,5 @@ var test1 = disj(
 	     function(x){return succeed(x + 10)}),
 	disj(succeed,succeed)));
 
+
+var test_subs = {};

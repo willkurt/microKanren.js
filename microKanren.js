@@ -36,6 +36,7 @@ var __logivar__ = {};
 __logivar__.id = "__logivar__";
 
 //creates a logic variable
+
 var logicVar = function(var_name){
     var o = Object.create(__logivar__);
     o.id = var_name;//this will be used to compare 2 logi vars
@@ -44,17 +45,25 @@ var logicVar = function(var_name){
 
 var isLogicVar = function (x) { return __logivar__.isPrototypeOf(x);}
 
-var emptySubset = [];
+//this might actually be an empty object not an empty list
+var emptySubset = []; 
 
 //of course were not going to use assoc lists
 //since javascript objects work just fine
 var ext_s = function (vari, value, s){
-    s[vari] = value;
+    s[vari.id] = value;
     return s;
 };
 
-
-
+//this differs a bit from the scheme
+//as far as replaces in assoc list with a js object {};
+var lookup = function (vari, s){
+    return(
+	!isLogicVar(vari) ? vari :
+	    s[vari.id] ? lookup(s[vari.id],s) :
+	    vari	
+    );
+};
 
 
 
