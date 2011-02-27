@@ -9,4 +9,6 @@ var test1 = disj(
 	disj(succeed,succeed)));
 
 
-var test_subs = {};
+var lx = logicVar('x');
+var ly = logicVar('y');
+

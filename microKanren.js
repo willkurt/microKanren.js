@@ -45,8 +45,8 @@ var logicVar = function(var_name){
 
 var isLogicVar = function (x) { return __logivar__.isPrototypeOf(x);}
 
-//this might actually be an empty object not an empty list
-var emptySubset = []; 
+
+var emptySubset = {}; 
 
 //of course were not going to use assoc lists
 //since javascript objects work just fine
@@ -57,6 +57,7 @@ var ext_s = function (vari, value, s){
 
 //this differs a bit from the scheme
 //as far as replaces in assoc list with a js object {};
+//note: the answer may actually need to come back in a list/array 
 var lookup = function (vari, s){
     return(
 	!isLogicVar(vari) ? vari :
@@ -66,7 +67,21 @@ var lookup = function (vari, s){
 };
 
 
-
+//okay here's the meet and potatoes of all this
+//unify
+var unify = function(t1,t2,s){
+    var t1 = lookup(t1,s);
+    var t2 = lookup(t2,s);
+    return(
+	(t1 == t2) ? s :
+	    isLogicVar(t1) ? ext_s(t1,t2,s) :
+	    isLogicVar(t2) ? ext_s(t2,t1,s) :
+	    (isPair(t1) && isPair(t2)) ?
+	    "this part is the hard part" :
+	    t1 === t1 ? s :
+	    {}//changed from false
+    );
+}
 
 
 //scheme primatives we'll probably need
@@ -112,6 +127,9 @@ var isList = function (xs) {
     return (xs instanceof Array);
 };
 
+var isPair = function (xs) {
+    return (isList(xs) && !empty(xs));
+};
 
 //yea I know this is not a purely functional map
 var map = function(func,ls) {
