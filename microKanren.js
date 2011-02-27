@@ -73,13 +73,15 @@ var unify = function(t1,t2,s){
     var t1 = lookup(t1,s);
     var t2 = lookup(t2,s);
     return(
-	(t1 == t2) ? s :
+	s === false ? false  :
+	    (t1 == t2) ? s :
 	    isLogicVar(t1) ? ext_s(t1,t2,s) :
 	    isLogicVar(t2) ? ext_s(t2,t1,s) :
+	    (isList(t1) && isList(t2)) && (empty(t1) && empty(t2)) ? s : 
 	    (isPair(t1) && isPair(t2)) ?
-	    "this part is the hard part" :
-	    t1 === t1 ? s :
-	    {}//changed from false
+	    unify(first(t1),first(t2),unify(rest(t1),rest(t2))) :
+	t1 === t2 ? s :
+	    false
     );
 }
 
