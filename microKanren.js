@@ -28,7 +28,7 @@ var conj = function(f1,f2){
 
 //logic variables
 //when attempting to implement scheme-like features
-//in js, not hviang real symbols is a fairly large
+//in js, not having real symbols is a fairly large
 //issue...
 
 //prototypical logic variable
@@ -72,8 +72,9 @@ var lookup = function (vari, s){
 //one problem that i'm pretty sure exists here is 
 //that a I believe there is a discrpence between the s pass
 //and the final s returned
-//at the very least there ARE side effects, will try to remove
-var unify = function(t1,t2,s){
+//at the very least there ARE side effects, will need to remove
+var unify = function(t1,t2,subs){
+    var s = clone(subs);//want to avoid major side effects
     var t1 = lookup(t1,s);
     var t2 = lookup(t2,s);
     return(
@@ -90,7 +91,36 @@ var unify = function(t1,t2,s){
 	t1 === t2 ? s :
 	    false
     );
-}
+};
+
+
+//couldn't think of a clever name for ==
+var $U = function (t1,t2){
+    return(
+	function(s){
+	    var u = unify(t1,t2,emptySubset);
+	    return(
+		u ? succeed(u) :
+		    fail(u)
+	    );
+	}
+    );
+};
+
+
+var run = function (g) {return g(emptySubset)};
+
+//some examples from the original
+var choice = function(vari, lst){
+	if(empty(lst)){
+	    return fail;
+	} else {
+	    return(disj($U(vari,first(lst)),
+			 choice(vari,rest(lst))));
+	}
+
+};
+
 
 
 //scheme primatives we'll probably need
@@ -157,4 +187,15 @@ if (typeof Object.create !== 'function') {
         F.prototype = o;
         return new F();
     };
+}
+
+//I just needed a simple 'clone' function
+//http://stackoverflow.com/questions/728360/copying-an-object-in-javascript
+var clone = function(obj){
+    if(obj == null || typeof(obj) != 'object')
+        return obj;
+    var temp = new obj.constructor(); 
+    for(var key in obj)
+        temp[key] = clone(obj[key]);
+    return temp;
 }

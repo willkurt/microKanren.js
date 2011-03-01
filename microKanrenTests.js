@@ -12,3 +12,20 @@ var test1 = disj(
 var lx = logicVar('x');
 var ly = logicVar('y');
 
+var testChoiceS = function(){
+    return(
+	run(choice(1,[1,2,3]))
+    );
+};
+
+var testChoiceF = function(){
+    return(
+	run(choice(4,[1,2,3]))
+    );
+};
+
+var testChoiceV = function(){
+    return(
+	run(choice(lx,[1,2,3]))
+    );
+};
