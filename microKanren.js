@@ -50,14 +50,13 @@ var emptySubset = {};
 //of course were not going to use assoc lists
 //since javascript objects work just fine
 var ext_s = function (vari, value, sub){
-    var s = clone(sub);
+    var s = clone(sub);//to keep it side-effect free
     s[vari.id] = value;
     return s;
 };
 
 //this differs a bit from the scheme
 //as far as replaces in assoc list with a js object {};
-//note: the answer may actually need to come back in a list/array 
 var lookup = function (vari, s){
     return(
 	!isLogicVar(vari) ? vari :
@@ -72,7 +71,7 @@ var lookup = function (vari, s){
 //one problem that i'm pretty sure exists here is 
 //that a I believe there is a discrpence between the s pass
 //and the final s returned
-//at the very least there ARE side effects, will need to remove
+
 var unify = function(t1,t2,subs){
     var s = clone(subs);//want to avoid major side effects
     var t1 = lookup(t1,s);
