@@ -49,7 +49,8 @@ var emptySubset = {};
 
 //of course were not going to use assoc lists
 //since javascript objects work just fine
-var ext_s = function (vari, value, s){
+var ext_s = function (vari, value, sub){
+    var s = clone(sub);
     s[vari.id] = value;
     return s;
 };
@@ -97,7 +98,7 @@ var unify = function(t1,t2,subs){
 var $U = function (t1,t2){
     return(
 	function(s){
-	    var u = unify(t1,t2,emptySubset);
+	    var u = unify(t1,t2,s);
 	    return(
 		u ? succeed(u) :
 		    fail(u)
