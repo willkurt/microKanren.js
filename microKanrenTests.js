@@ -12,6 +12,31 @@ var test1 = disj(
 var lx = logicVar('x');
 var ly = logicVar('y');
 
+
+
+//some examples from the original
+//it make make sense to pull these out of this file
+//and into a test file later
+var choice = function(vari, lst){
+	if(empty(lst)){
+	    return fail;
+	} else {
+	    return(disj($U(vari,first(lst)),
+			 choice(vari,rest(lst))));
+	}
+
+};
+
+
+var common_el = function (l1,l2){
+    return(conj(choice(lx,l1),
+		choice(lx,l2))
+	  );
+};
+
+
+
+
 var testChoiceS = function(){
     return(
 	run(choice(1,[1,2,3]))
@@ -29,3 +54,21 @@ var testChoiceV = function(){
 	run(choice(lx,[1,2,3]))
     );
 };
+
+//not producing the right results
+var testCommonEl = function (){
+    return run(common_el([1,2,3],[3,4,5]));
+};
+
+var testCommonElF = function(){
+    return run(common_el([1,2,3],[4,5,6]))
+};
+
+
+
+
+var conso = function (a,b,l){
+    return $U(build(a,b),l);
+};
+
+var testConso1 = run(conso(1,[2,3],lx));

@@ -17,7 +17,6 @@ var disj = function(f1,f2){
 	    );}
     );};
 
-
 var conj = function(f1,f2){
     return(
 	function(x){
@@ -110,18 +109,10 @@ var $U = function (t1,t2){
 
 var run = function (g) {return g(emptySubset)};
 
-//some examples from the original
-var choice = function(vari, lst){
-	if(empty(lst)){
-	    return fail;
-	} else {
-	    return(disj($U(vari,first(lst)),
-			 choice(vari,rest(lst))));
-	}
-
-};
 
 
+//from here on out are just some helper functions
+//all the interesting logic programming code is done ;)
 
 //scheme primatives we'll probably need
 //car
