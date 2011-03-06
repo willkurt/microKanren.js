@@ -1,0 +1,18 @@
+This is my first attempt to work with logic programming in JavaScript 
+this works out to be essentially as direct as possible a translation
+of Oleg Kiselyov's microKanren from Scheme to JavaScript
+
+original: http://okmij.org/ftp/Scheme/sokuza-kanren.scm
+
+There are currently some obvious oddities from imperfections in translating
+and features of Scheme that really don't match with JavaScript
+
+Currently conso (and therefore all code that rely on conso)
+doesn't work as expected in the case of conso(1,lx,[1,2,3])
+where lx should be [2,3].
+
+Eitherway it's an okay start for now, and did help me to get a 
+better sense of how unification works in microKanren.
+
+Hopefully next up will be a more detailed implementation of miniKanren
+and hopefully a mini prolog

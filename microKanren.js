@@ -66,12 +66,8 @@ var lookup = function (vari, s){
 };
 
 
-//okay here's the meet and potatoes of all this
+//okay here's the meat and potatoes of all this
 //unify
-//one problem that i'm pretty sure exists here is 
-//that a I believe there is a discrpence between the s pass
-//and the final s returned
-
 var unify = function(t1,t2,subs){
     var s = clone(subs);//want to avoid major side effects
     var t1 = lookup(t1,s);
@@ -81,13 +77,13 @@ var unify = function(t1,t2,subs){
 	    (t1 == t2) ? s :
 	    isLogicVar(t1) ? ext_s(t1,t2,s) :
 	    isLogicVar(t2) ? ext_s(t2,t1,s) :
+	    //i need to revisit this line, not entirely sure it's necessary
 	    (isList(t1) && isList(t2)) && (empty(t1) && empty(t2)) ? s : 
 	    (isPair(t1) && isPair(t2)) ?
 	    (function(){
 		var s2 = unify(first(t1),first(t2),s);
 		return (s2 && unify(rest(t1),rest(t2),s2));
 	    })() :
-	t1 === t2 ? s :
 	    false
     );
 };

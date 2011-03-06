@@ -1,6 +1,6 @@
 //just reimplementing some of the tests in the original
 
-//calling with 10 should return [100,101,101,110,110]
+//calling with 100 should return [100,101,101,110,110]
 var test1 = disj(
     disj(fail,succeed),
     conj(
@@ -72,3 +72,9 @@ var conso = function (a,b,l){
 };
 
 var testConso1 = run(conso(1,[2,3],lx));
+
+
+//the second conso test does not work for my code
+//but i'll have to investigate further
+
+
